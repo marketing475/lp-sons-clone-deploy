@@ -300,8 +300,12 @@ const elems = document.querySelectorAll(".ao_btn");
 <script data-api-key="d432bd771cdb4c28a028176e89a42b30" id="portal-scripts" src="https://portal.autoops.com/portal-scripts.js"></script>
 <script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'},{'ap':'cpsh-oh'},{'server':'p3plzcpnl509336'},{'dcenter':'p3'},{'cp_id':'10581719'},{'cp_cl':'8'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script>
 <style id="lp-sons-overrides">.w-grid-list.owl-carousel>.owl-dots~.owl-dots{display:none!important;}.hm-slider .w-image{text-align:center!important;}.hm-slider .w-image .w-image-h{display:inline-block!important;}.hm-slider .w-image img{margin-left:auto!important;margin-right:auto!important;}</style><script src="/nav-fallback.js?v=6" defer></script>
+
+
+
 <script>
 (function(){
+  var PER_PAGE = 6;
   function esc(s){return (s||'').replace(/[&<>"']/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c];});}
   function fmtDate(d){
     if (!d) return '';
@@ -344,18 +348,58 @@ const elems = document.querySelectorAll(".ao_btn");
       '</article>'
     );
   }
-  function render(posts){
+  function paginationHTML(current, total){
+    if (total <= 1) return '';
+    var items = '';
+    if (current > 1){
+      items += '<a class="page-numbers prev" href="#page=' + (current-1) + '"><span>&laquo; Previous</span></a>';
+    }
+    for (var i=1; i<=total; i++){
+      if (i === current){
+        items += '<span aria-current="page" class="page-numbers current"><span>' + i + '</span></span>';
+      } else {
+        items += '<a class="page-numbers" href="#page=' + i + '"><span>' + i + '</span></a>';
+      }
+    }
+    if (current < total){
+      items += '<a class="page-numbers next" href="#page=' + (current+1) + '"><span>Next &raquo;</span></a>';
+    }
+    return '<nav class="pagination navigation" role="navigation"><div class="nav-links">' + items + '</div></nav>';
+  }
+  var allPosts = [];
+  function readPageFromHash(){
+    var m = /(?:^|#|&)page=(\d+)/.exec(window.location.hash || '');
+    return m ? Math.max(1, parseInt(m[1],10)) : 1;
+  }
+  function render(){
     var host = document.querySelector('.w-grid-list');
     if (!host) return;
-    // Sort newest first
-    posts.sort(function(a,b){ return String(b.date||'').localeCompare(String(a.date||'')); });
-    host.innerHTML = posts.map(cardHTML).join('');
+    var total = Math.ceil(allPosts.length / PER_PAGE) || 1;
+    var page = Math.min(readPageFromHash(), total);
+    var start = (page - 1) * PER_PAGE;
+    var slice = allPosts.slice(start, start + PER_PAGE);
+    host.innerHTML = slice.map(cardHTML).join('');
+    // Insert pagination after the .w-grid-list container's parent section
+    var oldNav = document.querySelector('nav.pagination.navigation');
+    if (oldNav) oldNav.remove();
+    var navHTML = paginationHTML(page, total);
+    if (navHTML){
+      var container = host.closest('.l-section, section, main, .l-main') || host.parentNode;
+      container.insertAdjacentHTML('beforeend', navHTML);
+    }
     var pre = document.querySelector('.w-grid-preloader');
     if (pre) pre.style.display = 'none';
+    // Scroll to top of listing on page nav
+    if (page > 1){ window.scrollTo({top: (host.getBoundingClientRect().top + window.scrollY) - 100, behavior: 'smooth'}); }
   }
   fetch('/blog/posts.json', {cache: 'no-store'})
     .then(function(r){ return r.json(); })
-    .then(function(d){ render(Array.isArray(d) ? d : (d.posts || [])); })
+    .then(function(d){
+      allPosts = (Array.isArray(d) ? d : (d.posts || [])).slice();
+      allPosts.sort(function(a,b){ return String(b.date||'').localeCompare(String(a.date||'')); });
+      render();
+      window.addEventListener('hashchange', render);
+    })
     .catch(function(err){
       var host = document.querySelector('.w-grid-list');
       if (host) host.innerHTML = '<p style="padding:24px;color:#888;">Unable to load posts. Please try again shortly.</p>';
