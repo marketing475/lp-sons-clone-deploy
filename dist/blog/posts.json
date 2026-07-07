@@ -1,0 +1,44 @@
+{
+  "posts": [
+    {
+      "title": "Oil Change in Deltona, FL - LP & Sons Auto Care",
+      "slug": "oil-change-deltona-fl",
+      "excerpt": "Florida summer heat breaks down engine oil faster. LP & Sons Auto Care in Deltona offers full-service oil changes to keep your engine protected all season long.",
+      "date": "2026-07-05",
+      "category": "oil_changes",
+      "featured_image": "/assets/blog/oil-change-deltona-fl-featured.webp",
+      "featured_image_cdn": "",
+      "author": "LP & Sons Auto Care"
+    },
+    {
+      "title": "Common Summer Car Repairs and How to Avoid Them - LP & Sons Auto Care",
+      "slug": "common-summer-car-repairs-and-how-to-avoid-them",
+      "excerpt": "",
+      "date": "",
+      "category": "",
+      "featured_image": "",
+      "featured_image_cdn": "",
+      "author": ""
+    },
+    {
+      "title": "The Essential Role of Regular Oil Changes - LP & Sons Auto Care",
+      "slug": "the-essential-role-of-regular-oil-changes",
+      "excerpt": "",
+      "date": "",
+      "category": "",
+      "featured_image": "",
+      "featured_image_cdn": "",
+      "author": ""
+    },
+    {
+      "title": "Transmission Care for Spring: What You Need to Know - LP & Sons Auto Care",
+      "slug": "transmission-care-for-spring-what-you-need-to-know",
+      "excerpt": "",
+      "date": "",
+      "category": "",
+      "featured_image": "",
+      "featured_image_cdn": "",
+      "author": ""
+    }
+  ]
+}
