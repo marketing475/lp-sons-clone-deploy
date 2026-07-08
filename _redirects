@@ -92,3 +92,6 @@
 /you-deserve-the-best-from-your-automotive-service-shop  /blog/you-deserve-the-best-from-your-automotive-service-shop.html  301
 /youll-lose-engine-power-if-you-have-a-vacuum-leak  /blog/youll-lose-engine-power-if-you-have-a-vacuum-leak.html  301
 /youve-got-a-rainbow-of-fluids-underneath-your-cars-hood  /blog/youve-got-a-rainbow-of-fluids-underneath-your-cars-hood.html  301
+
+# Legacy WordPress author archive URLs
+/author/* /blog 301
