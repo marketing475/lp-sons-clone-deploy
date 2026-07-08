@@ -1,3 +1,0 @@
-
-# Legacy WP pagination (/blog/page/2 through /blog/page/17) — static export has only 1 page
-/blog/page/*  /blog  301

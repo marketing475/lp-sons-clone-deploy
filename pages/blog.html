@@ -1,0 +1,71 @@
+
+<section class="l-section wpb_row height_small color_primary"><div class="l-section-h i-cf"><div class="g-cols vc_row via_flex valign_middle type_default stacking_default"><div class="vc_col-sm-12 wpb_column vc_column_container p-title-col"><div class="vc_column-inner"><div class="wpb_wrapper"><h1 class="w-post-elm post_title us_custom_71d3e3d1 align_center entry-title color_link_inherit">Blog</h1></div></div></div></div></div></section>
+<section class="l-section height_auto for_sidebar at_right"><div class="l-section-h"><div class="l-content"><div class="vc_column-inner"><section class="l-section wpb_row height_medium"><div class="l-section-h i-cf"><div class="g-cols vc_row via_flex valign_top type_default stacking_default"><div class="vc_col-sm-12 wpb_column vc_column_container"><div class="vc_column-inner"><div class="wpb_wrapper"><div class="w-grid us_grid type_grid layout_959 cols_1 pagination_regular preload_style_spinner" data-filterable="true" id="us_grid_1" style="--columns:1;--gap:4rem;"><style>.layout_959 .w-grid-item-h{}.layout_959 .usg_post_image_1{margin-bottom:1rem!important}.layout_959 .usg_post_title_1{font-size:1.4rem!important;margin-bottom:0.5rem!important}.layout_959 .usg_hwrapper_1{color:var(--color-content-faded)!important;font-size:0.9rem!important}.layout_959 .usg_post_content_1{margin-top:0.5rem!important}.layout_959 .usg_btn_1{margin-top:1.5rem!important}</style><div class="w-grid-list">
+<!-- populated dynamically from /blog/posts.json -->
+</div> <div class="w-grid-preloader">
+<div class="g-preloader type_1">
+<div></div>
+</div>
+</div>
+<!-- pagination removed: static export has only 1 page of posts -->
+</div></div></div></div></div></div></section>
+</div></div><div class="l-sidebar"><div class="vc_column-inner"><div class="widget widget_block" id="block-2"><h2>Reach Us</h2>
+<div class="w-iconbox iconpos_left style_default color_primary align_left no_text"><a aria-label="LP &amp; Sons Auto Care" class="w-iconbox-link" href="/" title="Home"><div class="w-iconbox-icon" style="font-size:28px;"><i class="fas fa-home"></i></div></a><div class="w-iconbox-meta"><p class="w-iconbox-title" style="font-size:16px;"><a aria-label="LP &amp; Sons Auto Care" class="w-iconbox-link" href="/" title="Home">LP &amp; Sons Auto Care</a></p></div></div><div class="w-separator size_custom" style="height:10px"></div><div class="w-iconbox iconpos_left style_default color_primary align_left no_text"><a aria-label="342 W. New York Ave, DeLand, FL 32720" class="w-iconbox-link" href="https://g.page/Auto-repair-deland?share" rel="nofollow" target=" _blank"><div class="w-iconbox-icon" style="font-size:28px;"><i class="fas fa-map-signs"></i></div></a><div class="w-iconbox-meta"><p class="w-iconbox-title" style="font-size:16px;"><a aria-label="342 W. New York Ave, DeLand, FL 32720" class="w-iconbox-link" href="https://g.page/Auto-repair-deland?share" rel="nofollow" target=" _blank">342 W. New York Ave, DeLand, FL 32720</a></p></div></div><div class="w-separator size_custom" style="height:10px"></div><div class="w-iconbox iconpos_left style_default color_primary align_left no_text"><a aria-label="386-624-6910" class="w-iconbox-link" href="tel:3866246910"><div class="w-iconbox-icon" style="font-size:28px;"><i class="fas fa-phone"></i></div></a><div class="w-iconbox-meta"><p class="w-iconbox-title" style="font-size:16px;"><a aria-label="386-624-6910" class="w-iconbox-link" href="tel:3866246910">386-624-6910</a></p></div></div><div class="w-separator size_small"></div>
+<h2>Office Hours</h2>
+<div class="w-iconbox iconpos_left style_default color_primary align_left no_text"><div class="w-iconbox-icon" style="font-size:28px;"><i class="fas fa-clock"></i></div><div class="w-iconbox-meta"><p class="w-iconbox-title" style="font-size:16px;">Mon – Fri | 8:00am – 6:00pm</p></div></div><div class="w-separator size_custom" style="height:10px"></div><div class="w-iconbox iconpos_left style_default color_primary align_left no_text"><div class="w-iconbox-icon" style="font-size:28px;"><i class="fas fa-clock"></i></div><div class="w-iconbox-meta"><p class="w-iconbox-title" style="font-size:16px;">Sat – Sun | Closed</p></div></div></div></div></div></div></section><script>
+(function(){
+  function esc(s){return (s||'').replace(/[&<>"']/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c];});}
+  function fmtDate(d){
+    if (!d) return '';
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d);
+    if (!m) return d;
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return months[parseInt(m[2],10)-1] + ' ' + parseInt(m[3],10) + ', ' + m[1];
+  }
+  function stripBrandSuffix(t){ return (t||'').replace(/\s*[-–]\s*LP\s*&(?:amp;)?\s*Sons\s*Auto\s*Care.*$/i,''); }
+  function cardHTML(p){
+    var link = p.link || ('/blog/' + p.slug + '.html');
+    var title = stripBrandSuffix(p.title);
+    var excerpt = p.excerpt || '';
+    var dateDisp = fmtDate(p.date);
+    var esclink = esc(link), esctitle = esc(title), escexcerpt = esc(excerpt);
+    return (
+      '<article class="w-grid-item size_1x1 post type-post status-publish format-standard hentry category-blogs">' +
+        '<div class="w-grid-item-h">' +
+          '<h2 class="w-post-elm post_title usg_post_title_1 entry-title color_link_inherit">' +
+            '<a href="' + esclink + '">' + esctitle + '</a>' +
+          '</h2>' +
+          '<div class="w-hwrapper usg_hwrapper_1 has_text_color align_none valign_top wrap">' +
+            '<time class="w-post-elm post_date usg_post_date_1 entry-date published">' +
+              '<i class="far fa-clock"></i>' + esc(dateDisp) +
+            '</time>' +
+            '<div class="w-post-elm post_taxonomy usg_post_taxonomy_1 style_simple color_link_inherit">' +
+              '<i class="far fa-folder"></i>' +
+              '<a class="term-4 term-blogs" href="/blog"><span class="w-btn-label">Blogs</span></a>' +
+            '</div>' +
+          '</div>' +
+          '<div class="w-post-elm post_content usg_post_content_1">' + escexcerpt + '</div>' +
+          '<a class="w-btn us-btn-style_2 usg_btn_1" href="' + esclink + '">' +
+            '<span class="w-btn-label">Read More</span>' +
+          '</a>' +
+        '</div>' +
+      '</article>'
+    );
+  }
+  function render(posts){
+    var host = document.querySelector('.w-grid-list');
+    if (!host) return;
+    posts.sort(function(a,b){ return String(b.date||'').localeCompare(String(a.date||'')); });
+    host.innerHTML = posts.map(cardHTML).join('');
+    var pre = document.querySelector('.w-grid-preloader');
+    if (pre) pre.style.display = 'none';
+  }
+  fetch('/blog/posts.json', {cache: 'no-store'})
+    .then(function(r){ return r.json(); })
+    .then(function(d){ render(Array.isArray(d) ? d : (d.posts || [])); })
+    .catch(function(err){
+      var host = document.querySelector('.w-grid-list');
+      if (host) host.innerHTML = '<p style="padding:24px;color:#888;">Unable to load posts. Please try again shortly.</p>';
+    });
+})();
+</script>
