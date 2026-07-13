@@ -37,7 +37,7 @@ BLOG_POST_HEAD_TEMPLATE = """<script type=\"application/ld+json\">
   },
   \"description\": \"{{EXCERPT}}\",
   \"image\": \"{{FEATURED_IMAGE}}\",
-  \"mainEntityOfPage\": \"{{SITE_HOST}}/blog/{{SLUG}}.html\",
+  \"mainEntityOfPage\": \"{{SITE_HOST}}/{{SLUG}}/\",
   \"publisher\": {
     \"@type\": \"AutoRepair\",
     \"name\": \"LP & Sons Auto Care\",
@@ -153,10 +153,9 @@ def main():
             return f"{site_url}/"
         if slug == "404":
             return f"{site_url}/"
-        # Blog posts (blog/{slug}) — no trailing slash on live
-        if slug.startswith("blog/"):
-            return f"{site_url}/{slug}"
-        # Root pages + blog listing — WordPress used trailing slash
+        # All pages (services, locations, blog listing, blog posts) canonicalize
+        # at root with trailing slash — matches Google's indexed URLs from the
+        # WordPress era, preserving ranking signal through the migration.
         return f"{site_url}/{slug}/"
 
     # Build content pages
@@ -184,11 +183,14 @@ def main():
         out.write_text(html)
         written.append((page["slug"], out.stat().st_size))
 
-    # Build blog posts
+    # Build blog posts — output at ROOT with trailing-slash canonical to match
+    # Google's indexed URLs from the WordPress era (preserves ranking signal).
     posts = blog.get("posts", [])
     blog_post_frag_path = PAGES / cfg.get("blog", {}).get("postFragment", "blog-post.html")
 
     if posts:
+        # blog_dst kept only for posts.json / rss.xml sidecar files consumed by
+        # the /blog/ listing JS. Post HTML files themselves land at DIST root.
         blog_dst = DIST / "blog"
         blog_dst.mkdir(parents=True, exist_ok=True)
 
@@ -243,12 +245,12 @@ def main():
                     head_extras = head_extras.replace("{{" + k + "}}", v)
 
                 post_page = {
-                    "slug": f"blog/{p['slug']}",
+                    "slug": p["slug"],
                     "title": p["title"],
                     "meta_title": p.get("meta_title", p["title"]),
                     "description": p.get("description") or p.get("excerpt", ""),
-                    "canonical": f"{site_url}/blog/{p['slug']}.html",
-                    "ogUrl": f"{site_url}/blog/{p['slug']}.html",
+                    "canonical": f"{site_url}/{p['slug']}/",
+                    "ogUrl": f"{site_url}/{p['slug']}/",
                     "ogType": "article",
                     "ogImage": feat or f"{site_url}/wp-content/uploads/2020/06/white-stars.png",
                     "ogTitle": p.get("meta_title") or p["title"],
@@ -256,7 +258,7 @@ def main():
                     "pageStyles": head_extras,
                 }
                 html = assemble(post_page, head_tpl, nav_html, footer_html, frag, site_defaults)
-                out = blog_dst / (p["slug"] + ".html")
+                out = DIST / (p["slug"] + ".html")
                 out.parent.mkdir(parents=True, exist_ok=True)
                 out.write_text(html)
                 written.append((post_page["slug"], out.stat().st_size))
@@ -294,7 +296,9 @@ def main():
         )
 
     # sitemap.xml + robots.txt
+    # All pages canonicalize at /slug/ (trailing slash) to match Google's index.
     today = _dt.date.today().isoformat()
+    blog_slugs = {p["slug"] for p in posts}
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for slug, _ in written:
@@ -303,11 +307,10 @@ def main():
             continue
         if slug == "index":
             path = ""
-        elif slug.startswith("blog/"):
-            path = slug + ".html"
         else:
             path = slug + "/"
-        priority = "1.0" if slug == "index" else ("0.6" if slug.startswith("blog/") else "0.8")
+        is_blog_post = slug in blog_slugs
+        priority = "1.0" if slug == "index" else ("0.6" if is_blog_post else "0.8")
         lines += [
             "  <url>",
             f"    <loc>{site['url']}/{path}</loc>",

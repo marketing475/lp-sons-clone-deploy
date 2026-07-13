@@ -24,7 +24,7 @@
   }
   function stripBrandSuffix(t){ return (t||'').replace(/\s*[-–]\s*LP\s*&(?:amp;)?\s*Sons\s*Auto\s*Care.*$/i,''); }
   function cardHTML(p){
-    var link = p.link || ('/blog/' + p.slug + '.html');
+    var link = p.link || ('/' + p.slug + '/');
     var title = stripBrandSuffix(p.title);
     var excerpt = p.excerpt || '';
     var dateDisp = fmtDate(p.date);
@@ -41,7 +41,7 @@
             '</time>' +
             '<div class="w-post-elm post_taxonomy usg_post_taxonomy_1 style_simple color_link_inherit">' +
               '<i class="far fa-folder"></i>' +
-              '<a class="term-4 term-blogs" href="/blog"><span class="w-btn-label">Blogs</span></a>' +
+              '<a class="term-4 term-blogs" href="/blog/"><span class="w-btn-label">Blogs</span></a>' +
             '</div>' +
           '</div>' +
           '<div class="w-post-elm post_content usg_post_content_1">' + escexcerpt + '</div>' +
