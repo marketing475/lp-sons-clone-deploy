@@ -131,6 +131,11 @@ def main():
         if (ROOT / special).exists():
             shutil.copy2(ROOT / special, DIST / special)
 
+    # Copy CF Pages Functions directory (handles URL redirects beyond the
+    # ~100-rule _redirects cap on Free tier)
+    if (ROOT / "functions").exists():
+        shutil.copytree(ROOT / "functions", DIST / "functions")
+
     # Copy loose root-level static files (nav-fallback.js, favicons, etc.) —
     # anything at the repo root that isn't an HTML page, a build file, or a directory.
     _skip_root_files = {"build.py", "pages.json", "blog.json", ".gitignore", ".DS_Store",
