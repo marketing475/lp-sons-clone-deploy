@@ -173,11 +173,12 @@ def main():
             out = DIST / "index.html"
         elif page["slug"] == "404":
             out = DIST / "404.html"
-        elif page["slug"] == "blog":
-            # Blog listing goes to /blog.html per WordPress structure
-            out = DIST / "blog.html"
         else:
-            out = DIST / (page["slug"] + ".html")
+            # Folder-style output (dist/slug/index.html) so Cloudflare Pages'
+            # default trailing-slash behavior serves it at /slug/ (canonical)
+            # and 308-redirects the non-slash variant. Fights against the
+            # opposite default that dist/slug.html would trigger.
+            out = DIST / page["slug"] / "index.html"
 
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(html)
@@ -258,7 +259,9 @@ def main():
                     "pageStyles": head_extras,
                 }
                 html = assemble(post_page, head_tpl, nav_html, footer_html, frag, site_defaults)
-                out = DIST / (p["slug"] + ".html")
+                # Folder-style output (dist/slug/index.html) — see note in
+                # content-page loop above for the trailing-slash rationale.
+                out = DIST / p["slug"] / "index.html"
                 out.parent.mkdir(parents=True, exist_ok=True)
                 out.write_text(html)
                 written.append((post_page["slug"], out.stat().st_size))
