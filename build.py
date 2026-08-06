@@ -202,11 +202,25 @@ def main():
 
         if blog_post_frag_path.exists():
             post_tpl = blog_post_frag_path.read_text()
+            # Second template for plain semantic HTML bodies (new pipeline output).
+            # If present + body starts with <article>, use it instead of the default.
+            plain_tpl_path = PAGES / "blog-post-plain.html"
+            plain_tpl = plain_tpl_path.read_text() if plain_tpl_path.exists() else None
             for p in posts:
                 body = p.get("body", "")
                 if not body:
                     print(f"  SKIP blog/{p['slug']}: no body content")
                     continue
+                # Auto-pick template: Content Writer's plain <article> HTML gets the
+                # rich wrapping template; WP-imported bodies keep the bare passthrough.
+                if plain_tpl and body.lstrip().startswith("<article>"):
+                    post_tpl_this = plain_tpl
+                    # Strip leading <h1>...</h1> from body — template provides its own.
+                    body = re.sub(r'^\s*<article>\s*<h1>[^<]*</h1>\s*',
+                                  '<article>', body, count=1, flags=re.DOTALL)
+                    p = {**p, "body": body}
+                else:
+                    post_tpl_this = post_tpl
 
                 # Human-formatted date
                 raw_date = p.get("date", "")
@@ -219,7 +233,7 @@ def main():
                 raw_cat = p.get("category", "")
                 cat_display = raw_cat.replace("_", " ").replace("-", " ").title() if raw_cat else ""
 
-                frag = post_tpl
+                frag = post_tpl_this
                 for k, v in [("TITLE", p["title"]),
                              ("SLUG", p["slug"]),
                              ("DATE", raw_date),
