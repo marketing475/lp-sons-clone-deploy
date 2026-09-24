@@ -242,6 +242,7 @@ def main():
                              ("BODY", body),
                              ("FEATURED_IMAGE", p.get("featured_image", "")),
                              ("ALT_TEXT", p.get("alt_text", "")),
+                             ("IMAGE_ALT", (p.get("alt_text") or p["title"]).replace("&", "&amp;").replace('"', "&quot;")),
                              ("CATEGORY", cat_display),
                              ("EXCERPT", p.get("excerpt", ""))]:
                     frag = frag.replace("{{" + k + "}}", v)
